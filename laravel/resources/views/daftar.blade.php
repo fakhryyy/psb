@@ -14,7 +14,7 @@
 <main role="main" class="container" style="padding:100px 0 70px 0;">
     <div class="card border-success">
         <div class="card-body">
-            <h3>Formulir Pendaftaran Baru</h3>
+            <h3>Formulir Pendaftaran</h3>
 
             <hr>
             <form action="#" class="needs-validation" novalidate id="form-daftar" method="post" enctype="multipart/form-data">
