@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/api-datasantri/{id}/{status}', 'c_pendaftaran@apiDatasantri');
     Route::get('/pengaturan', 'PengaturanController@index');
     Route::post('/pengaturan-save', 'PengaturanController@saveData');
+    Route::get('/akademik', 'PengaturanController@addAkademik')->name('akademik.index');
+    Route::post('/akademik', 'PengaturanController@storeAkademik')->name('akademik.store');
 });
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PengaturanModel;
 use App\Http\Controllers\Controller;
+use DB;
 
 class PengaturanController extends Controller
 {
@@ -16,7 +17,6 @@ class PengaturanController extends Controller
 
     public function index()
     {
-
         $data = $this->var();
         $dataP = PengaturanModel::first();
         if (!empty($dataP)) {
@@ -31,7 +31,10 @@ class PengaturanController extends Controller
             $data['cpsmp'] = $dataP->cpsmp;
             $data['cpsma'] = $dataP->cpsma;
         }
-        return view('pengaturan', compact('data'));
+
+        $tahunakademik = DB::table('tahun_akademik')->get();
+
+        return view('pengaturan', compact('data', 'tahunakademik'));
     }
 
     public function saveData(Request $request)
@@ -76,5 +79,21 @@ class PengaturanController extends Controller
         $data['cpsma'] = "";
 
         return $data;
+    }
+
+    public function addAkademik()
+    {
+        return view('add_tahunakademik');
+    }
+
+    public function storeAkademik(Request $request)
+    {
+        $request->validate([
+            'tahun_akademik' => 'required|unique:tahun_akademik,tahun_akademik|max:9', // Validasi input
+        ]);
+
+        DB::table('tahun_akademik')->insert(['tahun_akademik' => $request->tahun_akademik, 'status' => 0]);
+
+        return redirect()->back()->with('success', 'Tahun akademik berhasil ditambahkan!');
     }
 }

@@ -8,6 +8,20 @@
             <form action="#" class="needs-validation" novalidate id="form-pengaturan" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="first">
+                    <div class="form-inline">
+                        <div class="form-group mb-2">
+                            <label for="tahunakademik" class="sr-only">Tahun Akademik</label>
+                            <input type="text" readonly class="form-control-plaintext" id="tahunakademik" value="Tahun Akademik Aktif">
+                        </div>
+                        <div class="form-group mx-sm-3 mb-2">
+                            <select class="form-control" id="tahunakademik" name="tahunakademik" required>
+                                @foreach($tahunakademik as $item)
+                                <option <?= $item->status == '1' ? 'selected' : '' ?> value="<?= $item->id_akademik ?>"><?= $item->tahun_akademik ?></option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <a href="{{ route('akademik.index') }}" class="btn btn-primary mb-2">Tambah Baru</a>
+                    </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label for="statuspendaftaran">Status Pendaftaran</label>
