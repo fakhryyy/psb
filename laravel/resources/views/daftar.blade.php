@@ -7,6 +7,35 @@
     #fourth {
         display: none;
     }
+
+    /* Ukuran radio button lebih besar */
+    .large-radio {
+        width: 20px;
+        height: 20px;
+    }
+
+    /* Ukuran teks label lebih besar */
+    .large-label {
+        font-size: 1.2rem;
+        /* Atur ukuran label */
+        margin-left: 8px;
+        /* Jarak antara radio button dan label */
+    }
+
+    /* Styling flexbox */
+    .d-flex {
+        display: flex;
+    }
+
+    .gap-3>* {
+        margin-right: 20px;
+        /* Jarak antar opsi */
+    }
+
+    /* Untuk memastikan elemen sejajar */
+    .align-items-center {
+        align-items: center;
+    }
 </style>
 
 @endsection
@@ -19,12 +48,14 @@
             <hr>
             <form action="#" class="needs-validation" novalidate id="form-daftar" method="post" enctype="multipart/form-data">
                 @csrf
-                <div id="first">
+                <div class="card shadow p-4 mb-4">
+                    <h4 class="card-title text-primary">Informasi Pendaftaran</h4>
+                    <hr>
                     <div class="form-group">
-                        <label for="email">Pilih Lembaga<span class="text-danger"> *</span></label>
-                        <select class="form-control" id="kategori" name="kategori" required>
-                            <option value="">- Pilih -</option>
-                        </select>
+                        <label for="kategori">Pilih Lembaga<span class="text-danger"> *</span></label>
+                        <div class="d-flex gap-3 align-items-center" id="kategori">
+
+                        </div>
                         <div id="kategoriError" class="invalid-feedback"></div>
                     </div>
                     <div class="form-group">
@@ -36,106 +67,141 @@
                         </select>
                         <div id="statusError" class="invalid-feedback"></div>
                     </div>
-                    <div class="form-group">
-                        <label for="pwd">NIK<span class="text-danger"> *</span></label>
-                        <input type="number" name="nik" id="nik" class="form-control">
-                        <div id="nikError" class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="pwd">Nama Lengkap<span class="text-danger"> *</span></label>
-                        <input type="text" id="nama" name="nama" class="form-control">
-                        <div id="namaError" class="invalid-feedback"></div>
+                </div>
 
-                        <div class="form-group row" style="margin-top: 10px;">
-                            <div class="col-6">
-                                <label for="pwd">Kota Kelahiran<span class="text-danger"> *</span></label>
-                                <input type="text" id="kota" name="kota_lahir" class="form-control" placeholder="Kota Kelahiran">
+                <div class="card shadow p-4 mb-4">
+                    <h4 class="card-title text-primary">Data Pribadi</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="nik">NIK<span class="text-danger"> *</span></label>
+                                <input type="number" name="nik" id="nik" class="form-control" required>
+                                <div id="nikError" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama">Nama Lengkap<span class="text-danger"> *</span></label>
+                                <input type="text" id="nama" name="nama" class="form-control" required>
+                                <div id="namaError" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="jk">Jenis Kelamin<span class="text-danger"> *</span></label>
+                                <select class="form-control" id="jk" name="jk" required>
+                                    <option value="">- Pilih -</option>
+                                    <option value="l">Laki-laki</option>
+                                    <option value="p">Perempuan</option>
+                                </select>
+                                <div id="jkError" class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="kota">Kota Kelahiran<span class="text-danger"> *</span></label>
+                                <input type="text" id="kota" name="kota_lahir" class="form-control" required>
                                 <div id="kotaError" class="invalid-feedback"></div>
                             </div>
-                            <div class="col-6">
-                                <label for="pwd">Tanggal Lahir<span class="text-danger"> *</span></label>
-                                <div class="input-group mb-3">
-                                    <input type="text" id="tgl_lahir" name="tgl_lahir" class="form-control datepicker" aria-describedby="basic-addon2">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-calendar-alt"></i></span>
-                                    </div>
-                                    <div id="tgl_lahirError" class="invalid-feedback"></div>
-                                </div>
-
+                            <div class="form-group">
+                                <label for="tgl_lahir">Tanggal Lahir<span class="text-danger"> *</span></label>
+                                <input type="text" id="tgl_lahir" name="tgl_lahir" class="form-control datepicker" required>
+                                <div id="tgl_lahirError" class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Jenis Kelamin<span class="text-danger"> *</span></label>
-                            <select class="form-control" id="jk" name="jk">
-                                <option value="">- Pilih -</option>
-                                <option value="l">Laki-laki</option>
-                                <option value="p">Perempuan</option>
-                            </select>
-                            <div id="jkError" class="invalid-feedback"></div>
-                        </div>
+                    </div>
+                </div>
 
-                        <div class="form-group">
-                            <label for="pwd">Alamat (Dusun, RT/RW)<span class="text-danger"> *</span></label>
-                            <input type="text" name="alamat" class="form-control" id="alamat">
-                            <div id="alamatError" class="invalid-feedback"></div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-3">
-                                <label for="email">Provinsi<span class="text-danger"> *</span></label>
-                                <select class="form-control" name="provinsi" id="provinsi">
+                <div class="card shadow p-4 mb-4">
+                    <h4 class="card-title text-primary">Alamat Lengkap</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="provinsi">Provinsi<span class="text-danger"> *</span></label>
+                                <select class="form-control" name="provinsi" id="provinsi" required>
                                     <option value="">- Pilih -</option>
                                 </select>
                                 <div id="provinsiError" class="invalid-feedback"></div>
                             </div>
-                            <div class="col-md-3">
-                                <label for="email">Kabupaten<span class="text-danger"> *</span></label>
-                                <select class="form-control" name="kabupaten" id="kabupaten" disabled>
-
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="kabupaten">Kabupaten<span class="text-danger"> *</span></label>
+                                <select class="form-control" name="kabupaten" id="kabupaten" required disabled>
+                                    <option value="">- Pilih -</option>
                                 </select>
                                 <div id="kabupatenError" class="invalid-feedback"></div>
                             </div>
-                            <div class="col-md-3">
-                                <label for="email">Kecamatan<span class="text-danger"> *</span></label>
-                                <select class="form-control" name="kecamatan" id="kecamatan" disabled>
-
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="kecamatan">Kecamatan<span class="text-danger"> *</span></label>
+                                <select class="form-control" name="kecamatan" id="kecamatan" required disabled>
+                                    <option value="">- Pilih -</option>
                                 </select>
                                 <div id="kecamatanError" class="invalid-feedback"></div>
                             </div>
-                            <div class="col-md-3">
-                                <label for="email">Kelurahan<span class="text-danger"> *</span></label>
-                                <select class="form-control" name="kelurahan" id="kelurahan" disabled>
-
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="kelurahan">Kelurahan<span class="text-danger"> *</span></label>
+                                <select class="form-control" name="kelurahan" id="kelurahan" required disabled>
+                                    <option value="">- Pilih -</option>
                                 </select>
                                 <div id="kelurahanError" class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="pwd">Nama Ayah<span class="text-danger"> *</span></label>
-                            <input type="text" name="ayah" id="ayah" class="form-control">
-                            <div id="ayahError" class="invalid-feedback"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="pwd">Nama Ibu<span class="text-danger"> *</span></label>
-                            <input type="text" name="ibu" id="ibu" class="form-control">
-                            <div id="ibuError" class="invalid-feedback"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd">No. HP/Whatsapp<span class="text-danger"> (Pastikan nomor yg anda masukkan sudah benar dan terdaftar pada aplikasi Whatsapp)</span></label>
-                            <input type="number" name="nohp" class="form-control" id="nohp" placeholder="082xxxxxxxxx">
-                            <div id="nohpError" class="invalid-feedback"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Domisili<span class="text-danger"> *</span></label>
-                            <select class="form-control" id="domisili" name="domisili">
-                                <option value="">- Pilih -</option>
-                                <option value="dalbar">PPBU Mlokorejo</option>
-                                <option value="daltim">PPBU Mlokorejo Daltim</option>
-                            </select>
-                            <div id="domisiliError" class="invalid-feedback"></div>
-                        </div>
-                        <button type="submit" class="btn btn-success float-right" id="submit"><i class="fas fa-paper-plane"></i> Simpan</button>
                     </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat Detail<span class="text-danger"> *</span></label>
+                        <input type="text" name="alamat" class="form-control" id="alamat" placeholder="Dusun, RT/RW" required>
+                        <div id="alamatError" class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <div class="card shadow p-4 mb-4">
+                    <h4 class="card-title text-primary">Data Orang Tua</h4>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ayah">Nama Ayah<span class="text-danger"> *</span></label>
+                                <input type="text" name="ayah" id="ayah" class="form-control" required>
+                                <div id="ayahError" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pekerjaan_ayah">Pekerjaan Ayah<span class="text-danger"> *</span></label>
+                                <input type="text" name="pekerjaan_ayah" id="pekerjaan_ayah" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ibu">Nama Ibu<span class="text-danger"> *</span></label>
+                                <input type="text" name="ibu" id="ibu" class="form-control" required>
+                                <div id="ibuError" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pekerjaan_ibu">Pekerjaan Ibu<span class="text-danger"> *</span></label>
+                                <input type="text" name="pekerjaan_ibu" id="pekerjaan_ibu" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow p-4 mb-4">
+                    <h4 class="card-title text-primary">Informasi Asal Sekolah</h4>
+                    <hr>
+                    <div class="form-group">
+                        <label for="asal_sekolah">Asal Sekolah<span class="text-danger"> *</span></label>
+                        <input type="text" name="asal_sekolah" id="asal_sekolah" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ijazah">Upload Ijazah<span class="text-danger"> *</span></label>
+                        <input type="file" name="ijazah" id="ijazah" class="form-control-file" required>
+                    </div>
+                </div>
+
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i> Daftar</button>
+                </div>
             </form>
         </div>
     </div>
@@ -172,13 +238,12 @@
             success: function(msg) {
                 var opt = '';
                 $.each(msg, function(key, value) {
-                    if (value.id == 1) {
-                        opt += '<option value="' + value.id + '">' + value.nama_kategori + '</option>';
-                    } else {
-                        opt += '<option value="' + value.id + '">Pesantren dan ' + value.nama_kategori + '</option>';
-                    }
-
-
+                    opt += `<div class="form-check">
+                                <input class="form-check-input large-radio" type="radio" name="kategori" id="lembaga${value.id}" value="${value.id}" required>
+                                <label class="form-check-label large-label" for="lembaga${value.id}">
+                                    ${value.nama_kategori}
+                                </label>
+                            </div>`
                 });
                 $("#kategori").append(opt);
             }
@@ -199,26 +264,6 @@
             }
         });
 
-        // $("#nik").change(function() {
-        //     var nik = $("#nik").val();
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: "{{url('/cekNik')}}" + '/' + nik,
-        //         cache: false,
-        //         success: function(msg) {
-        //             if (msg == 'y') {
-        //                 Swal.fire({
-        //                     icon: 'error',
-        //                     title: 'Maaf',
-        //                     text: 'NIK ini sudah terdaftar',
-        //                 })
-        //                 $("#nik").val('');
-        //                 $("#nik").focus();
-        //             }
-        //         }
-        //     });
-        // });
-
         $("#provinsi").change(function() {
             var provinsi = $("#provinsi").val();
             $('#kabupaten').removeAttr('disabled');
@@ -233,7 +278,6 @@
                     var opt = '';
                     $.each(msg, function(key, value) {
                         opt += '<option value="' + value.id + '">' + value.nama + '</option>';
-                        // console.log(value.nama)
                     });
                     $("#kabupaten").append('<option value="">- Pilih -</option>');
                     $("#kabupaten").append(opt);
@@ -253,7 +297,6 @@
                     var opt = '';
                     $.each(msg, function(key, value) {
                         opt += '<option value="' + value.id + '">' + value.nama + '</option>';
-                        // console.log(value.nama)
                     });
                     $("#kecamatan").append('<option value="">- Pilih -</option>');
                     $("#kecamatan").append(opt);
@@ -273,7 +316,6 @@
                     var opt = '';
                     $.each(msg, function(key, value) {
                         opt += '<option value="' + value.id + '">' + value.nama + '</option>';
-                        // console.log(value.nama)
                     });
                     $("#kelurahan").append('<option value="">- Pilih -</option>');
                     $("#kelurahan").append(opt);
@@ -405,7 +447,7 @@
                         },
                         success: function(data) {
                             $('#submit').removeAttr('disabled', 'disabled');
-                            if(data.success == false){
+                            if (data.success == false) {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Maaf',
@@ -413,7 +455,7 @@
                                 })
                                 $('#nik').addClass('is-invalid');
                                 $("#nik").focus();
-                            }else{
+                            } else {
                                 $('#bukti').modal('show');
                                 $('#nomor_urut').html(data.no_urut);
                             }

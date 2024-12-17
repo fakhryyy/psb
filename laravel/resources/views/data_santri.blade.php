@@ -7,7 +7,6 @@
         font-size: 12px;
         position: relative;
         clear: both;
-        *zoom: 1;
         zoom: 1;
     }
 </style>
