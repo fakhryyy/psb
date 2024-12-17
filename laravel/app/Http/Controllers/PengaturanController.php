@@ -32,9 +32,7 @@ class PengaturanController extends Controller
             $data['cpsma'] = $dataP->cpsma;
         }
 
-        $tahunakademik = DB::table('tahun_akademik')->get();
-
-        return view('pengaturan', compact('data', 'tahunakademik'));
+        return view('pengaturan', compact('data'));
     }
 
     public function saveData(Request $request)
@@ -58,6 +56,20 @@ class PengaturanController extends Controller
         } else {
             PengaturanModel::create($inputs);
         }
+
+        $idAkademik = $request->input('tahunakademik');
+        try {
+            // Set semua status tahun akademik menjadi 0
+            DB::table('tahun_akademik')->update(['status' => '0']);
+
+            // Set tahun akademik yang dipilih menjadi 1
+            DB::table('tahun_akademik')
+                ->where('id_akademik', '=', $idAkademik)
+                ->update(['status' => '1']);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+        }
+
         return response()->json([
             'success' => true,
             'data' => $dataP
@@ -83,17 +95,28 @@ class PengaturanController extends Controller
 
     public function addAkademik()
     {
-        return view('add_tahunakademik');
+        $tahunAkademik = DB::table('tahun_akademik')->get();
+
+        // Kembalikan data dalam format JSON
+        return response()->json($tahunAkademik);
     }
 
     public function storeAkademik(Request $request)
     {
         $request->validate([
-            'tahun_akademik' => 'required|unique:tahun_akademik,tahun_akademik|max:9', // Validasi input
+            'tahun_akademik' => 'required|unique:tahun_akademik,tahun_akademik|max:9',
         ]);
+        $insert = [
+            'tahun_akademik' => $request->tahun_akademik,
+            'status' => '0'
+        ];
+        DB::table('tahun_akademik')->insert($insert);
 
-        DB::table('tahun_akademik')->insert(['tahun_akademik' => $request->tahun_akademik, 'status' => 0]);
-
-        return redirect()->back()->with('success', 'Tahun akademik berhasil ditambahkan!');
+        return response()->json([
+            'message' => 'Tahun akademik berhasil ditambahkan!',
+            'data' => [
+                'tahun_akademik' => $insert['tahun_akademik'],
+            ],
+        ]);
     }
 }
