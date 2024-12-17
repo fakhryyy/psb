@@ -249,32 +249,6 @@
                 }
             });
 
-            async function getDataByNIK() {
-                const url =
-                    'https://indonesian-identification-card-ktp.p.rapidapi.com/api/v3/check?nik=3509086812960003';
-                const options = {
-                    method: 'GET',
-                    headers: {
-                        'X-RapidAPI-Key': 'ef14f2cb07msh0c73f41b37c309fp166be1jsn2828bfaab858',
-                        'X-RapidAPI-Host': 'indonesian-identification-card-ktp.p.rapidapi.com'
-                    }
-                };
-
-                try {
-                    const response = await fetch(url, options);
-                    if (response.ok) {
-                        const result = await response.json();
-                        console.log(result);
-                    } else {
-                        console.error('Gagal mendapatkan data. Status:', response.status);
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            }
-
-            getDataByNIK();
-
         });
     </script>
 @endsection
