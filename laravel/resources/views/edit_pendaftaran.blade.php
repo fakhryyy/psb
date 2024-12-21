@@ -305,7 +305,6 @@
                         </div>
                     </div>
                 </div>
-               
                 <button type="button" class="btn btn-danger" id="prev-3"><i class="fas fa-arrow-left"></i> Sembelumnya</button>
                 <button type="button" class="btn btn-danger float-right" id="next-3" ><i class="fas fa-arrow-right"></i> Selanjutnya</button>
             </div>
@@ -648,12 +647,7 @@ $(document).ready(function(){
                 },
                 error: function(xhr,msg){
                 console.log(msg + '\n' + xhr.responseText);
-                    // swal({
-                    //   type: 'error',
-                    //   title: 'Oops...',
-                    //   text: 'Terjadi Kesalahan!',
-                    //   timer: '1500'
-                    // })
+                    
                 }
             });
             return false;
@@ -690,4 +684,3 @@ $(document).ready(function(){
 </script>
 
 @endsection
-               
