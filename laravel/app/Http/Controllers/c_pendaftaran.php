@@ -117,7 +117,28 @@ class c_pendaftaran extends Controller
     public function generateBukti($id)
     {
         $pendaftaran = m_pendaftaran::where('no_urut', $id)->first();
-        $pdf = PDF::loadView('pdf.buktidaftar', compact('pendaftaran'));
+        switch ($pendaftaran->kategori) {
+            case '1':
+                $lembaga = 'Pesantren Non Formal';
+                break;
+            case '2':
+                $lembaga = 'SMA Plus Bustanul Ulum Mlokorejo';
+                break;
+            case '3':
+                $lembaga = 'SMP Plus Bustanul Ulum Mlokorejo';
+                break;
+            default:
+                $lembaga = '';
+                break;
+        }
+        $data = [
+            'KODE PENDAFTARAN' => $pendaftaran->no_urut,
+            'NAMA SANTRI' => $pendaftaran->nama,
+            'ASAL SEKOLAH' => $pendaftaran->sekolah_asal,
+            'DITERIMA DI LEMBAGA' => $lembaga,
+            'TANGGAL MENDAFTAR' => $pendaftaran->created_at->format('d-m-Y')
+        ];
+        $pdf = PDF::loadView('pdf.buktidaftar', compact('data'));
 
         return $pdf->stream('Bukti-Pendaftaran-' . $pendaftaran->no_urut . '.pdf');
     }

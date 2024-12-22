@@ -447,17 +447,6 @@
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
-
-                        {{-- <h3 class="text-center text-success">Alhamdulillah, pendaftaran anda telah berhasil.</h3>
-                    <h3 class="text-center">Nomor urut pendaftaran anda :</h3>
-                    <h1 class="text-center text-danger" id="nomor_urut"></h1>
-                    <h4 class="text-center">Kode diatas mohon dicatat atau di screenshot sebagai tanda bukti anda telah
-                        mendaftar.</h4>
-                    <h4 class="text-center">Silahkan melakukan konfirmasi pendaftaran dengan melakukan pembayaran biaya
-                        administrasi sebesar Rp. 50.000,- di kantor sekretariat pendaftaran (Kantor YWSPI) atau bisa
-                        melalui transfer ke No. Rek 7133192284 A/N Biro Keuangan Bustanul Ulum.</h4>
-                    <h4 class="text-center">Bukti transfer bisa dikirim ke No. HP/WA 085258793726 (Imroatus Sholeha)
-                    </h4> --}}
                         <div id="pdf-container" style="margin-top: 20px;">
                             <iframe id="pdf-frame" style="width: 100%; height: 500px; display: none;"></iframe>
                         </div>

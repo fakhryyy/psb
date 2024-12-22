@@ -57,7 +57,14 @@
             font-size: 20px;
             text-align: center;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin: 0;
+            color: #333;
+        }
+
+        .content h3 {
+            font-size: 20px;
+            text-align: center;
+            margin: 0 0 10px 0;
             color: #333;
         }
 
@@ -71,9 +78,39 @@
             margin-bottom: 10px;
         }
 
+        .content .info h4 {
+            font-size: 15px;
+            text-transform: uppercase;
+            margin: 0;
+            color: #333;
+        }
+
+        .content .info p {
+            font-size: 15px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
         .content .info span {
             font-weight: bold;
             color: #444;
+        }
+
+        .notes {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .notes h2 {
+            font-size: 20px;
+            text-decoration: underline;
+            margin: 0;
+        }
+
+        .notes p {
+            font-size: 15px;
+            text-transform: uppercase;
+            text-align: justify;
+            margin: 0;
         }
 
         .footer {
@@ -97,27 +134,34 @@
             <h1>PONDOK PESANTREN BUSTANUL ULUM MLOKOREJO</h1>
             <h3>Jl. KH. Abdullah Yaqin No. 1-5 Mlokorejo - Puger - Jember</h3>
             <p>No HP: - | Website: www.ponpes-mloko.net</p>
+            <hr>
         </div>
 
         <!-- Konten Bukti Pendaftaran -->
         <div class="content">
-            <h4>BUKTI PENDAFTARAN SANTRI BARU</h4>
-            <h4>TAHUN AJARAN 2025-2026</h4>
+            <h2>BUKTI PENDAFTARAN SANTRI BARU</h2>
+            <h2>TAHUN AJARAN 2025-2026</h2>
+            <h3>--------------------</h3>
+            @foreach ($data as $key => $value)
+                <div class="info">
+                    <h4>{{ $key }}:</h4>
+                    <p>{{ $value }}</p>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="notes">
             <hr>
-            <div class="info">
-                <p><span>KODE PENDAFTARAN:</span> {{ $pendaftaran->no_urut }}</p>
-                <p><span>NAMA:</span> {{ $pendaftaran->nama }}</p>
-            </div>
-            <div class="info">
-                <p><span>LEMBAGA:</span> {{ $pendaftaran->kategori }}</p>
-                <p><span>TANGGAL PENDAFTARAN:</span> {{ $pendaftaran->created_at->format('d-m-Y') }}</p>
-            </div>
+            <h2>CATATAN :</h2>
+            <p>Silahkan melakukan konfirmasi pendaftaran dengan melakukan pembayaran biaya
+                administrasi sebesar <strong>Rp. 100.000,-</strong> di kantor Biro Keuangan Bustanul Ulum (BKBU) atau bisa
+                melalui transfer ke No. Rek <strong>7133192284</strong> A/N Biro Keuangan Bustanul Ulum.</p>
+            <p>Bukti transfer bisa dikirim ke No. HP/WA <strong>0878-6692-7409</strong> (Contact Person BKBU)</p>
         </div>
 
         <!-- Footer -->
         <div class="footer">
-            <p><strong>SMK Pelita Nusantara</strong></p>
-            <p>"Mencetak Generasi Emas untuk Bangsa"</p>
+            <p><strong>Pondok Pesantren Bustanul Ulum Mlokorejo</strong></p>
         </div>
     </div>
 </body>
