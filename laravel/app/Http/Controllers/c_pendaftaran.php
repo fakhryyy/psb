@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\m_pendaftaran;
-use App\PengaturanModel;
-use App\Exports\ExportData;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Http\Controllers\Controller;
 use DB;
 use Auth;
+use App\m_pendaftaran;
+use App\PengaturanModel;
+use Barryvdh\DomPDF\Facade\PDF;
+use App\Exports\ExportData;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Datatables;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class c_pendaftaran extends Controller
 {
@@ -56,51 +57,7 @@ class c_pendaftaran extends Controller
 
     public function update(Request $req)
     {
-        $kabupaten = $req->kabupaten == null ? $req->lastKabupaten : $req->kabupaten;
-        $kecamatan = $req->kecamatan == null ? $req->lastKecamatan : $req->kecamatan;
-        $kelurahan = $req->kelurahan == null ? $req->lastKelurahan : $req->kelurahan;
-
-        $ttl_ayah = ($req->tempat_lahir_ayah != '' && $req->tgl_lahir_ayah) ? $req->tempat_lahir_ayah . ', ' . $req->tgl_lahir_ayah : null;
-        $ttl_ibu = ($req->tempat_lahir_ibu != '' && $req->tgl_lahir_ibu) ? $req->tempat_lahir_ibu . ', ' . $req->tgl_lahir_ibu : null;
-
-        $update = [
-            'nama' => $req->nama,
-            'nik' => $req->nik,
-            'no_kk' => $req->no_kk,
-            'nisn' => $req->nisn,
-            'no_akte' => $req->no_akte,
-            'kota_lahir' => $req->kota_lahir,
-            'tgl_lahir' => $req->tgl_lahir,
-            'jk' => $req->jk,
-            'alamat' => $req->alamat,
-            'provinsi' => $req->provinsi,
-            'kabupaten' => $kabupaten,
-            'kecamatan' => $kecamatan,
-            'kelurahan' => $kelurahan,
-            'sekolah_asal' => $req->sekolah_asal,
-            'alamat_sekolah_asal' => $req->alamat_sekolah,
-            'jml_saudara' => $req->jml_saudara,
-            'anak_ke' => $req->anak_ke,
-            'ayah' => $req->ayah,
-            'nik_ayah' => $req->nik_ayah,
-            'ttl_ayah' => $ttl_ayah,
-            'pend_ayah' => $req->pend_ayah,
-            'pekerjaan_ayah' => $req->pekerjaan_ayah,
-            'nohp_ayah' => $req->nohp_ayah,
-            'penghasilan_ayah' => $req->penghasilan_ayah,
-            'ibu' => $req->ibu,
-            'nik_ibu' => $req->nik_ibu,
-            'ttl_ibu' => $ttl_ibu,
-            'pend_ibu' => $req->pend_ibu,
-            'pekerjaan_ibu' => $req->pekerjaan_ibu,
-            'nohp_ibu' => $req->nohp_ibu,
-            'penghasilan_ibu' => $req->penghasilan_ibu,
-            'nohp' => $req->nohp,
-            'domisili' => $req->domisili,
-            'is_verif' => $req->is_verif,
-            'status_santri' => $req->status,
-            'updated_at' => $this->tglentry
-        ];
+        $update = $this->prepareInputArray($req, ['updated_at' => $this->tglentry], true);
 
         m_pendaftaran::where('id_daftar', $req->id_daftar)->update($update);
         return response()->json([
@@ -110,9 +67,9 @@ class c_pendaftaran extends Controller
 
     public function cekNik($nik)
     {
-        $cek = m_pendaftaran::join('tahun_akademik as b','tb_pendaftaran.id_akademik', '=', 'b.id_akademik')
-               ->where('b.status', '=', '1')
-               ->where('nik', $nik)->count();
+        $cek = m_pendaftaran::join('tahun_akademik as b', 'tb_pendaftaran.id_akademik', '=', 'b.id_akademik')
+            ->where('b.status', '=', '1')
+            ->where('nik', $nik)->count();
         if ($cek > 0) {
             return 'y';
         } else {
@@ -144,38 +101,83 @@ class c_pendaftaran extends Controller
         $status = true;
 
         $ceknik = $this->cekNik($req->nik);
-        if($ceknik == 'y'){
+        if ($ceknik == 'y') {
             $status = false;
-        }else{
-             $input = [
-                'no_urut' => $no_urut,
-                'nama' => $req->nama,
-                'nik' => $req->nik,
-                'kota_lahir' => $req->kota_lahir,
-                'tgl_lahir'    => $req->tgl_lahir,
-                'jk' => $req->jk,
-                'alamat' => $req->alamat,
-                'provinsi' => $req->provinsi,
-                'kabupaten' => $req->kabupaten,
-                'kecamatan' => $req->kecamatan,
-                'kelurahan' => $req->kelurahan,
-                'id_akademik' => $tahunakademik->id_akademik,
-                'nohp' => $req->nohp,
-                'domisili' => $req->domisili,
-                'ayah' => $req->ayah,
-                'ibu' => $req->ibu,
-                'is_verif' => '0',
-                'status_santri' => $req->status,
-                'kategori' => $req->kategori
-            ];
-
+        } else {
+            $input = $this->prepareInputArray($req, ['no_urut' => $no_urut, 'id_akademik' => $tahunakademik->id_akademik], false);
             m_pendaftaran::create($input);
         }
-        
+
         return response()->json([
             'success' => $status,
             'no_urut' => $no_urut
         ]);
+    }
+
+    public function generateBukti($id)
+    {
+        $pendaftaran = m_pendaftaran::where('no_urut', $id)->first();
+        $pdf = PDF::loadView('pdf.buktidaftar', compact('pendaftaran'));
+
+        return $pdf->stream('Bukti-Pendaftaran-' . $pendaftaran->no_urut . '.pdf');
+    }
+
+    public function prepareInputArray($req, $options = [], $isEdit = false)
+    {
+        $tanggal_lahir = sprintf('%04d-%02d-%02d', $req->tahunLahir, $req->bulanLahir, $req->tanggalLahir);
+        $ttl_ayah = ($req->tempat_lahir_ayah != '' && $req->tgl_lahir_ayah) ? $req->tempat_lahir_ayah . ', ' . $req->tgl_lahir_ayah : null;
+        $ttl_ibu = ($req->tempat_lahir_ibu != '' && $req->tgl_lahir_ibu) ? $req->tempat_lahir_ibu . ', ' . $req->tgl_lahir_ibu : null;
+
+        $kabupaten = $req->kabupaten;
+        $kecamatan = $req->kecamatan;
+        $kelurahan = $req->kelurahan;
+        if ($isEdit == true) {
+            $kabupaten = $req->kabupaten == null ? $req->lastKabupaten : $req->kabupaten;
+            $kecamatan = $req->kecamatan == null ? $req->lastKecamatan : $req->kecamatan;
+            $kelurahan = $req->kelurahan == null ? $req->lastKelurahan : $req->kelurahan;
+        }
+
+        $inputArray = [
+            'nama' => $req->nama,
+            'nik' => $req->nik,
+            'nisn' => $req->nisn,
+            'kota_lahir' => $req->kota_lahir,
+            'tgl_lahir' => $tanggal_lahir,
+            'no_kk' => $req->no_kk,
+            'no_akte' => $req->no_akte,
+            'jk' => $req->jk,
+            'anak_ke' => $req->anak_ke,
+            'jml_saudara' => $req->jml_saudara,
+            'alamat' => $req->alamat,
+            'provinsi' => $req->provinsi,
+            'kabupaten' => $kabupaten,
+            'kecamatan' => $kecamatan,
+            'kelurahan' => $kelurahan,
+            'sekolah_asal' => $req->sekolah_asal,
+            'alamat_sekolah_asal' => $req->alamat_sekolah,
+            'nohp' => $req->nohp,
+            'ayah' => $req->ayah,
+            'nik_ayah' => $req->nik_ayah,
+            'ttl_ayah' => $ttl_ayah,
+            'pend_ayah' => $req->pend_ayah,
+            'pekerjaan_ayah' => $req->pekerjaan_ayah,
+            'nohp_ayah' => $req->nohp_ayah,
+            'penghasilan_ayah' => $req->penghasilan_ayah,
+            'ibu' => $req->ibu,
+            'nik_ibu' => $req->nik_ibu,
+            'ttl_ibu' => $ttl_ibu,
+            'pend_ibu' => $req->pend_ibu,
+            'pekerjaan_ibu' => $req->pekerjaan_ibu,
+            'nohp_ibu' => $req->nohp_ibu,
+            'penghasilan_ibu' => $req->penghasilan_ibu,
+            'kategori' => $req->kategori,
+            'domisili' => $req->domisili,
+            'status_santri' => $req->status,
+            'khusus' => $req->khusus,
+        ];
+
+        // Gabungkan dengan options
+        return array_merge($inputArray, $options);
     }
 
     public function data_santri()

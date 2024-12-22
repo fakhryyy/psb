@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'c_home@index');
 Route::get('/home', 'c_home@index')->name('home');
 Route::get('/daftar', 'c_pendaftaran@index');
+Route::get('/daftar/pdf/{id}', 'c_pendaftaran@generateBukti')->name('daftar.pdf');
 Route::post('/daftar/post', 'c_pendaftaran@simpan');
 
 Route::get('api/kategori', 'api@kategori');
