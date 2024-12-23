@@ -114,7 +114,7 @@ class c_pendaftaran extends Controller
         ]);
     }
 
-    public function generateBukti($id)
+    public function generateBukti(Request $request, $id)
     {
         $pendaftaran = m_pendaftaran::where('no_urut', $id)->first();
         switch ($pendaftaran->kategori) {
@@ -139,6 +139,12 @@ class c_pendaftaran extends Controller
             'TANGGAL MENDAFTAR' => $pendaftaran->created_at->format('d-m-Y')
         ];
         $pdf = PDF::loadView('pdf.buktidaftar', compact('data'));
+
+        // Cek parameter 'download' dari request
+        if ($request->has('download') && $request->download == 'true') {
+            // Mengunduh PDF
+            return $pdf->download('Bukti-Pendaftaran-' . $pendaftaran->no_urut . '.pdf');
+        }
 
         return $pdf->stream('Bukti-Pendaftaran-' . $pendaftaran->no_urut . '.pdf');
     }

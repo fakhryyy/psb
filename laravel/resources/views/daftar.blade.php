@@ -422,36 +422,37 @@
 
                     <div id="fourth">
                         <div class="form-group">
-                            <label for="email">Status Verifikasi<span class="text-danger"> *</span></label>
-                            <select class="form-control" id="is_verif" name="is_verif">
-                                <option value="">- Pilih -</option>
-                                <option value="0"
-                                    <?= isset($data->is_verif) && $data->is_verif == '0' ? 'selected' : '' ?>>
-                                    Belum diverifikasi</option>
-                                <option value="1"
-                                    <?= isset($data->is_verif) && $data->is_verif == '1' ? 'selected' : '' ?>>
-                                    Terverifikasi</option>
-                            </select>
-                            <div id="is_verifError" class="invalid-feedback"></div>
+                            <div class="form-check">
+                                <input type="checkbox" id="agreeTerms" name="agreeTerms" class="form-check-input">
+                                <label class="form-check-label" for="agreeTerms">
+                                    Saya setuju dengan <a href="#" target="_blank">syarat dan
+                                        ketentuan</a>.
+                                </label>
+                            </div>
+                            <div id="termsError" class="invalid-feedback" style="display: none;">
+                                Anda harus menyetujui syarat dan ketentuan.
+                            </div>
                         </div>
                         <button type="button" class="btn btn-danger" id="prev-4"><i class="fas fa-arrow-left"></i>
                             Sembelumnya</button>
                         <button type="submit" class="btn btn-success float-right" id="submit"><i
-                                class="fas fa-paper-plane"></i> Simpan</button>
+                                class="fas fa-paper-plane"></i> DAFTAR</button>
                     </div>
                 </form>
             </div>
         </div>
 
-        <div class="modal" tabindex="-1" role="dialog" id="bukti">
+        <div class="modal fade" tabindex="-1" role="dialog" id="bukti" aria-hidden="true" data-backdrop="static"
+            data-keyboard="false">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div id="pdf-container" style="margin-top: 20px;">
                             <iframe id="pdf-frame" style="width: 100%; height: 500px; display: none;"></iframe>
                         </div>
-                        <button type="button" class="btn btn-primary float-right"
-                            onclick="location.reload();">Oke</button>
+                        <a href="#" id="download-bukti" class="btn btn-success">Download Bukti Pendaftaran</a>
+                        <button type="button" class="btn btn-primary float-right" onclick="location.reload();"
+                            data-bs-dismiss="modal">Oke</button>
                     </div>
                 </div>
             </div>
@@ -740,49 +741,67 @@
                     $('#third').hide();
                     $('#progressBar').css('width', '100%');
                     $('#progressBarText').html('Langkah - 4');
-                    $('#title').text('BERKAS-BERKAS');
+                    $('#title').text('VALIDASI');
                 }
             });
 
             $('#form-daftar').on('submit', function(e) {
                 url = "{{ url('/daftar/post') }}";
 
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    data: new FormData($('#form-daftar')[0]),
-                    contentType: false,
-                    processData: false,
-                    beforeSend: function() {
-                        $('#submit').attr('disabled', 'disabled');
-                    },
-                    success: function(data) {
-                        $('#submit').removeAttr('disabled', 'disabled');
-                        if (data.success == false) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Maaf',
-                                text: 'NIK ini sudah terdaftar',
-                            })
-                            $('#nik').addClass('is-invalid');
-                            $("#nik").focus();
-                        } else {
-                            $('#bukti').modal('show');
-                            // $('#nomor_urut').html(data.no_urut);
-                            const pdfUrl = "{{ url('/daftar/pdf') }}/" + data.no_urut;
-                            $('#pdf-frame').attr('src', pdfUrl).show();
+                // Ambil elemen checkbox
+                const checkbox = $('#agreeTerms');
+                const errorMessage = $('#termsError');
+
+                // Validasi checkbox
+                if (!checkbox.is(':checked')) {
+                    e.preventDefault(); // Hentikan pengiriman form
+                    errorMessage.show(); // Tampilkan pesan error
+                    checkbox.addClass('is-invalid'); // Tambahkan kelas untuk styling
+                    return false;
+                } else {
+                    errorMessage.hide(); // Sembunyikan pesan error
+                    checkbox.removeClass('is-invalid'); // Hapus kelas styling error
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: new FormData($('#form-daftar')[0]),
+                        contentType: false,
+                        processData: false,
+                        beforeSend: function() {
+                            $('#submit').attr('disabled', 'disabled');
+                        },
+                        success: function(data) {
+                            $('#submit').removeAttr('disabled', 'disabled');
+                            $('#download-bukti').removeAttr('href')
+                            if (data.success == false) {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Maaf',
+                                    text: 'NIK ini sudah terdaftar',
+                                })
+                                $('#nik').addClass('is-invalid');
+                                $("#nik").focus();
+                            } else {
+                                $('#bukti').modal('show');
+                                // $('#nomor_urut').html(data.no_urut);
+                                const pdfUrl = "{{ url('/daftar/pdf') }}/" + data.no_urut;
+                                $('#pdf-frame').attr('src', pdfUrl).show();
+                                $('#download-bukti').attr("href",
+                                    `{{ url('/daftar/pdf/${data.no_urut}?download=true') }}`
+                                )
+                            }
+                        },
+                        error: function(xhr, msg) {
+                            console.log(msg + '\n' + xhr.responseText);
+                            // swal({
+                            //   type: 'error',
+                            //   title: 'Oops...',
+                            //   text: 'Terjadi Kesalahan!',
+                            //   timer: '1500'
+                            // })
                         }
-                    },
-                    error: function(xhr, msg) {
-                        console.log(msg + '\n' + xhr.responseText);
-                        // swal({
-                        //   type: 'error',
-                        //   title: 'Oops...',
-                        //   text: 'Terjadi Kesalahan!',
-                        //   timer: '1500'
-                        // })
-                    }
-                });
+                    });
+                }
                 return false;
             });
 
