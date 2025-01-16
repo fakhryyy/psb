@@ -1,66 +1,6 @@
 @extends('index')
 @section('css')
-    <style>
-        .jumbotron {
-            border-radius: 0 0 150px 0;
-            padding: 120px 0 120px 0;
-        }
-
-        .logo-utama {
-            -webkit-animation: upDown 5s infinite;
-            animation: upDown 5s infinite;
-        }
-
-        @-webkit-keyframes upDown {
-            0% {
-                -webkit-transform: translateY(-20px);
-                transform: translateY(-20px);
-            }
-
-            50% {
-                -webkit-transform: translateY(20px);
-                transform: translateY(20px);
-            }
-
-            100% {
-                -webkit-transform: translateY(-20px);
-                transform: translateY(-20px);
-            }
-        }
-
-        @keyframes upDown {
-            0% {
-                -webkit-transform: translateY(-20px);
-                transform: translateY(-20px);
-            }
-
-            50% {
-                -webkit-transform: translateY(20px);
-                transform: translateY(20px);
-            }
-
-            100% {
-                -webkit-transform: translateY(-20px);
-                transform: translateY(-20px);
-            }
-        }
-
-        .home-img img {
-            max-width: 400px;
-        }
-
-        .text-home {
-            color: #fff;
-        }
-
-        .text-home h1 {
-            font-weight: bolder;
-        }
-
-        .text-home .p2 {
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('assets/css/custom-style.css') }}">
 @endsection
 @section('jumbotron')
     <div class="jumbotron bg-custom d-flex align-items-center ">
@@ -89,14 +29,61 @@
 
 @section('page')
     <main role="main" class="container pt-3 " style="padding-bottom:70px;">
-        <div class="row">
+        {{-- <div class="row">
             <span class="form-control input-lg">
                 <marquee onmouseout="this.start()" onmouseover="this.stop()">
                     <b style="color: red;">Telah di Buka Pendaftaran Santri Baru Pondok Pesantren Bustanul Ulum Mlokorejo
                         Tahun Pelajaran <?= date('Y') ?>-<?= date('Y') + 1 ?></b>
                 </marquee>
             </span>
-        </div>
+        </div> --}}
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title mb-5">Alur Pendaftaran</h4>
+
+                        <div class="hori-timeline" dir="ltr">
+                            <ul class="list-inline events">
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-primary text-primary">1</div>
+                                        <h5 class="font-size-16">Event One</h5>
+                                        <p class="text-muted">It will be as simple as occidental in fact it will be
+                                            Occidental Cambridge friend</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-success text-success">2</div>
+                                        <h5 class="font-size-16">Event Two</h5>
+                                        <p class="text-muted">Everyone realizes why a new common language one could refuse
+                                            translators.</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-danger text-danger">7 June</div>
+                                        <h5 class="font-size-16">Event Three</h5>
+                                        <p class="text-muted">If several languages coalesce the grammar of the resulting
+                                            simple and regular</p>
+                                    </div>
+                                </li>
+                                <li class="list-inline-item event-list">
+                                    <div class="px-4">
+                                        <div class="event-date bg-soft-warning text-warning">8 June</div>
+                                        <h5 class="font-size-16">Event Four</h5>
+                                        <p class="text-muted">Languages only differ in their pronunciation and their most
+                                            common words.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- end card -->
+            </div>
         </div>
 
         <div class="row  mt-3">
@@ -308,7 +295,8 @@
                             <div
                                 style="position: absolute;width: 80%;bottom: 10px;left: 0;right: 0;margin-left: auto;margin-right: auto;color: #000;text-align: center;">
                                 <small style="line-height: 1.8;font-size: 0px;background: #fff;"> <a
-                                        href="https://googlemapsembed.net/">Embed Google Map</a> </small></div>
+                                        href="https://googlemapsembed.net/">Embed Google Map</a> </small>
+                            </div>
                             <style>
                                 .nvs {
                                     position: relative;
