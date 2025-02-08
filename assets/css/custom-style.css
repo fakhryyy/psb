@@ -58,68 +58,80 @@
   font-weight: bold;
 }
 
-.hori-timeline .events {
-  border-top: 3px solid #e9ecef;
+.circle {
+  padding: 13px 20px;
+  border-radius: 50%;
+  background-color: #0caa14;
+  color: #fff;
+  max-height: 50px;
+  z-index: 2;
 }
 
-.hori-timeline .events .event-list {
-  display: block;
-  position: relative;
-  text-align: center;
-  padding-top: 70px;
-  margin-right: 0;
+.how-it-works.row .col-2 {
+  align-self: stretch;
 }
-
-.hori-timeline .events .event-list:before {
+.how-it-works.row .col-2::after {
   content: "";
   position: absolute;
-  height: 36px;
-  border-right: 2px dashed #dee2e6;
-  top: 0;
+  border-left: 3px solid #0caa14;
+  z-index: 1;
+}
+.how-it-works.row .col-2.bottom::after {
+  height: 50%;
+  left: 50%;
+  top: 50%;
+}
+.how-it-works.row .col-2.full::after {
+  height: 100%;
+  left: calc(50% - 3px);
+}
+.how-it-works.row .col-2.full-left::after {
+  height: 100%;
+  left: 50%;
+}
+.how-it-works.row .col-2.top::after {
+  height: 50%;
+  left: 50%;
+}
+.how-it-works.row .col-2.top-2::after {
+  height: 50%;
+  left: calc(50% - 3px);
+  bottom: 50%;
 }
 
-.hori-timeline .events .event-list .event-date {
-  position: absolute;
-  top: 38px;
-  left: 0;
-  right: 0;
-  width: 75px;
-  margin: 0 auto;
-  border-radius: 4px;
-  padding: 2px 4px;
+.timeline div {
+  padding: 0;
+  height: 40px;
 }
-
-@media (min-width: 1140px) {
-  .hori-timeline .events .event-list {
-    display: inline-block;
-    width: 24%;
-    padding-top: 45px;
-  }
-
-  .hori-timeline .events .event-list .event-date {
-    top: -12px;
-  }
+.timeline hr {
+  border-top: 3px solid #0caa14;
+  margin: 0;
+  top: 17px;
+  position: relative;
 }
-
-.bg-soft-primary {
-  background-color: rgba(64, 144, 203, 0.3) !important;
+.timeline .col-2 {
+  display: flex;
+  overflow: hidden;
 }
-
-.bg-soft-success {
-  background-color: rgba(71, 189, 154, 0.3) !important;
+.timeline .corner {
+  border: 3px solid #0caa14;
+  width: 100%;
+  position: relative;
+  border-radius: 15px;
 }
-
-.bg-soft-danger {
-  background-color: rgba(231, 76, 94, 0.3) !important;
+.timeline .top-right {
+  left: 50%;
+  top: -50%;
 }
-
-.bg-soft-warning {
-  background-color: rgba(249, 213, 112, 0.3) !important;
+.timeline .left-bottom {
+  left: -50%;
+  top: calc(50% - 3px);
 }
-
-.card {
-  border: none;
-  margin-bottom: 24px;
-  -webkit-box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
-  box-shadow: 0 0 13px 0 rgba(236, 236, 241, 0.44);
+.timeline .top-left {
+  left: -50%;
+  top: -50%;
+}
+.timeline .right-bottom {
+  left: 50%;
+  top: calc(50% - 3px);
 }

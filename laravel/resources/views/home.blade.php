@@ -1,6 +1,7 @@
 @extends('index')
 @section('css')
     <link rel="stylesheet" href="{{ asset('assets/css/custom-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/temp/styles.css') }}">
 @endsection
 @section('jumbotron')
     <div class="jumbotron bg-custom d-flex align-items-center ">
@@ -28,64 +29,169 @@
 @endsection
 
 @section('page')
-    <main role="main" class="container pt-3 " style="padding-bottom:70px;">
-        {{-- <div class="row">
-            <span class="form-control input-lg">
-                <marquee onmouseout="this.start()" onmouseover="this.stop()">
-                    <b style="color: red;">Telah di Buka Pendaftaran Santri Baru Pondok Pesantren Bustanul Ulum Mlokorejo
-                        Tahun Pelajaran <?= date('Y') ?>-<?= date('Y') + 1 ?></b>
-                </marquee>
-            </span>
-        </div> --}}
+    <section class="pt-3">
+        <div class="container">
+            <h2 class="pb-3 pt-2 border-bottom mb-5">Alur Pendaftaran</h2>
+            <!--first section-->
+            <div class="row align-items-center how-it-works d-flex">
+                <div class="col-2 text-center bottom d-inline-flex justify-content-center align-items-center">
+                    <div class="circle font-weight-bold">1</div>
+                </div>
+                <div class="col-6">
+                    <h5>Registrasi</h5>
+                    <p>Calon santri mengisi formulir pendaftaran (online atau offline) dan mendapatkan bukti
+                        pendaftaran.</p>
+                </div>
+            </div>
+            <!--path between 1-2-->
+            <div class="row timeline">
+                <div class="col-2">
+                    <div class="corner top-right"></div>
+                </div>
+                <div class="col-8">
+                    <hr />
+                </div>
+                <div class="col-2">
+                    <div class="corner left-bottom"></div>
+                </div>
+            </div>
+            <!--second section-->
+            <div class="row align-items-center justify-content-end how-it-works d-flex">
+                <div class="col-6 text-right">
+                    <h5>Pembayaran Biaya Pendaftaran</h5>
+                    <p> Calon santri menyerahkan bukti pendaftaran ke panitia sekaligus membayar biaya pendaftaran.
+                    </p>
+                </div>
+                <div class="col-2 text-center full d-inline-flex justify-content-center align-items-center">
+                    <div class="circle font-weight-bold">2</div>
+                </div>
+            </div>
+            <!--path between 2-3-->
+            <div class="row timeline">
+                <div class="col-2">
+                    <div class="corner right-bottom"></div>
+                </div>
+                <div class="col-8">
+                    <hr />
+                </div>
+                <div class="col-2">
+                    <div class="corner top-left"></div>
+                </div>
+            </div>
+            <!--third section-->
+            <div class="row align-items-center how-it-works d-flex">
+                <div class="col-2 text-center full-left d-inline-flex justify-content-center align-items-center">
+                    <div class="circle font-weight-bold">3</div>
+                </div>
+                <div class="col-6">
+                    <h5>Pemberkasan</h5>
+                    <p>Calon santri menyerahkan dokumen persyaratan seperti ijazah, KK, dan lainnya.</p>
+                </div>
+            </div>
+            <!--path between 4-5-->
+            <div class="row timeline">
+                <div class="col-2">
+                    <div class="corner top-right"></div>
+                </div>
+                <div class="col-8">
+                    <hr />
+                </div>
+                <div class="col-2">
+                    <div class="corner left-bottom"></div>
+                </div>
+            </div>
+            <!--second section-->
+            <div class="row align-items-center justify-content-end how-it-works d-flex">
+                <div class="col-6 text-right">
+                    <h5>Sowan ke Pengasuh</h5>
+                    <p>Calon santri bersama orang tua melakukan sowan kepada pengasuh untuk meminta restu dan arahan.
+                    </p>
+                </div>
+                <div class="col-2 text-center top-2 d-inline-flex justify-content-center align-items-center">
+                    <div class="circle font-weight-bold">4</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title mb-5">Alur Pendaftaran</h4>
-
-                        <div class="hori-timeline" dir="ltr">
-                            <ul class="list-inline events">
-                                <li class="list-inline-item event-list">
-                                    <div class="px-4">
-                                        <div class="event-date bg-soft-primary text-primary">1</div>
-                                        <h5 class="font-size-16">Event One</h5>
-                                        <p class="text-muted">It will be as simple as occidental in fact it will be
-                                            Occidental Cambridge friend</p>
-                                    </div>
-                                </li>
-                                <li class="list-inline-item event-list">
-                                    <div class="px-4">
-                                        <div class="event-date bg-soft-success text-success">2</div>
-                                        <h5 class="font-size-16">Event Two</h5>
-                                        <p class="text-muted">Everyone realizes why a new common language one could refuse
-                                            translators.</p>
-                                    </div>
-                                </li>
-                                <li class="list-inline-item event-list">
-                                    <div class="px-4">
-                                        <div class="event-date bg-soft-danger text-danger">7 June</div>
-                                        <h5 class="font-size-16">Event Three</h5>
-                                        <p class="text-muted">If several languages coalesce the grammar of the resulting
-                                            simple and regular</p>
-                                    </div>
-                                </li>
-                                <li class="list-inline-item event-list">
-                                    <div class="px-4">
-                                        <div class="event-date bg-soft-warning text-warning">8 June</div>
-                                        <h5 class="font-size-16">Event Four</h5>
-                                        <p class="text-muted">Languages only differ in their pronunciation and their most
-                                            common words.</p>
-                                    </div>
-                                </li>
-                            </ul>
+    <!-- Portfolio Grid-->
+    <section class="page-section bg-light" id="portfolio">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-heading text-uppercase">BROSUR</h2>
+                <h3 class="section-subheading text-muted">
+                    Informasi Lengkap Pendaftaran.
+                </h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Portfolio item 1-->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" href="#" data-bs-toggle="modal"
+                            data-image="{{ asset('download/madin.jpg') }}" data-contact="6285726259905"
+                            data-description="Pondok Pesantren Bustanul Ulum Mlokorejo">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('download/madin.jpg') }}" alt="..." />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Brosur Pesantren</div>
+                            <div class="portfolio-caption-subheading text-muted">
+                                <a href="#">Unduh Brosur</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- end card -->
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Portfolio item 2-->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" data-image="{{ asset('download/sma.jpg') }}"
+                            data-contact="6282332151370" data-description="SMA Plus Bustanul Ulum Mlokorejo">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('download/sma.jpg') }}" alt="..." />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Barosur SMABU</div>
+                            <div class="portfolio-caption-subheading text-muted">
+                                <a href="#">Unduh Brosur</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-4">
+                    <!-- Portfolio item 3-->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" data-image="{{ asset('download/smp.jpg') }}"
+                            data-contact="6285784884451" data-description="SMP Plus Bustanul Ulum Mlokorejo">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('download/smp.jpg') }}" alt="..." />
+                        </a>
+                        <div class="portfolio-caption">
+                            <div class="portfolio-caption-heading">Brosur SMPBU</div>
+                            <div class="portfolio-caption-subheading text-muted">
+                                <a href="#">Unduh Brosur</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </section>
 
+
+    <main role="main" class="container pt-3 " style="padding-bottom:70px;">
         <div class="row  mt-3">
             <div class="col-md-8">
                 <div class="card border border-success mb-3">
@@ -96,7 +202,8 @@
                         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                    <img class="d-block w-100" src="{{ asset('download/dibuka.jpg') }}" alt="First slide">
+                                    <img class="d-block w-100" src="{{ asset('download/dibuka.jpg') }}"
+                                        alt="First slide">
                                 </div>
                                 {{-- <div class="carousel-item">
                                 <img class="d-block w-100" src="{{asset('download/prosedur.jpg')}}" alt="Second slide">
@@ -316,12 +423,59 @@
             </div>
         </div>
     </main>
+
+    <!-- Portfolio Modals-->
+    <!-- Portfolio item 1 modal popup-->
+    <div class="portfolio-modal modal fade" id="brosurModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                </div>
+                <div class="container-fluid">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <div class="modal-body">
+                                <!-- Project details-->
+                                <h2 class="text-uppercase">BROSUR</h2>
+                                <p class="item-intro text-muted" id="modalDescription"></p>
+                                <img class="img-fluid d-block mx-auto" id="modalImage" src="" alt="..." />
+                                <a class="btn btn-success btn-xl text-uppercase" id="modalContact" href="#">
+                                    <i class="fab fa-whatsapp"></i>
+                                    HUBUNGI PANITIA
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('js')
+    {{-- <script src="{{ asset('assets/temp/scripts.js') }}"></script> --}}
     <script>
-        // $('#promo').modal('show');
-    </script>
-    <script>
+        $(document).ready(function() {
+            $(".portfolio-link").on("click", function(e) {
+                e.preventDefault(); // Mencegah reload halaman jika href="#" digunakan
+
+                // Ambil data dari atribut data-image, data-contact, dan data-description
+                const imageSrc = $(this).data("image");
+                const contact = $(this).data("contact");
+                const description = $(this).data("description");
+
+                // Update konten modal
+                $("#modalImage").attr("src", imageSrc);
+                $("#modalContact").attr("href", "https://wa.me/" + contact);
+                $("#modalDescription").text(description);
+
+                // Tampilkan modal
+                const modal = new bootstrap.Modal($("#brosurModal")[0]);
+                modal.show();
+            });
+        });
+
+
         const dataChart = {
             "labels": ["MADIN", "SMA", "SMP"],
             "datasets": [{
